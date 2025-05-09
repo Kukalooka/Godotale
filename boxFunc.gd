@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+class_name BattleBox
+
 func resize(x, y):
 	$Box_Top.shape.set_size(Vector2(x, 8))
 	$Box_Bottom.shape.set_size(Vector2(x, 8))
@@ -43,7 +45,6 @@ func _draw():
 	pass
 
 func _ready():
-	resize(50, 30)
 	pass # Replace with function body.
 
 func _process(delta):

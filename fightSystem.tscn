@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=10 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://ddxq6g32lnrng" path="res://charFunc.gd" id="1_7lwci"]
 [ext_resource type="Texture2D" uid="uid://b3wagihnnskul" path="res://heart.png" id="1_c0kym"]
+[ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://master.gd" id="1_dmj4t"]
 [ext_resource type="Script" uid="uid://p4eckqcinrmp" path="res://boxFunc.gd" id="3_5rwid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4th6"]
@@ -21,6 +22,7 @@ size = Vector2(8, 128)
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(248, 256)
+script = ExtResource("1_dmj4t")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(72, 88)
