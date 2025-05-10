@@ -13,12 +13,13 @@ config_version=5
 config/name="UTFD"
 run/main_scene="res://Scenes/fightSystem.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://Assets/Visual/icon.svg"
+config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=480
+window/stretch/mode="canvas_items"
 
 [rendering]
 

@@ -21,11 +21,10 @@ size = Vector2(144, 8)
 size = Vector2(8, 128)
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(248, 256)
 script = ExtResource("1_8pywo")
 
 [node name="PlayerSoul" type="CharacterBody2D" parent="."]
-position = Vector2(72, 88)
+position = Vector2(320, 360)
 script = ExtResource("2_x7v4w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSoul"]
@@ -37,9 +36,11 @@ texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("3_1ck7a")
 
-[node name="Box" type="StaticBody2D" parent="."]
-position = Vector2(72, 88)
+[node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(320, 360)
 script = ExtResource("4_nnkry")
+defaultPosOffset = 65
+player = NodePath("../PlayerSoul")
 
 [node name="Box_Top" type="CollisionShape2D" parent="Box"]
 position = Vector2(0, -60)
