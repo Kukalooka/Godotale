@@ -5,6 +5,7 @@ class_name BattleBox
 @export var defaultPosOffset: int
 @export var player: CharacterBody2D
 @export var borderWidth : int
+@export var UIObject : Control
 
 @export var borderColor : Color
 @export var backgroundColor : Color
@@ -44,7 +45,14 @@ func resizeIgnoreUI(x, y):
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
 	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
-	queue_redraw()
+	
+func resizeMindUI(x, y):
+	var UIPos = UIObject.position.y
+	
+	resize(x, y)
+	self.position = Vector2(viewportWidth / 2, UIObject.position.y - 
+			($Box_Left.shape.size.y / 2))
+	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
 func _draw():
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2

@@ -24,6 +24,13 @@ size = Vector2(8, 128)
 z_index = -1
 script = ExtResource("1_8pywo")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 376.0
+offset_right = 640.0
+offset_bottom = 480.0
+
 [node name="PlayerSoul" type="CharacterBody2D" parent="."]
 position = Vector2(320, 360)
 script = ExtResource("2_x7v4w")
@@ -37,12 +44,13 @@ texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("3_1ck7a")
 
-[node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player")]
+[node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player", "UIObject")]
 position = Vector2(320, 300)
 script = ExtResource("4_nnkry")
 defaultPosOffset = 65
 player = NodePath("../PlayerSoul")
 borderWidth = 4
+UIObject = NodePath("../Control")
 borderColor = Color(0.789229, 0.978901, 0.96732, 1)
 backgroundColor = Color(0.319846, 0.0833755, 0.171997, 1)
 
