@@ -6,6 +6,9 @@ class_name BattleBox
 @export var player: CharacterBody2D
 @export var borderWidth : int
 
+@export var borderColor : Color
+@export var backgroundColor : Color
+
 func resize(x, y):
 	var viewportHeight = get_viewport().size.y
 	
@@ -33,29 +36,13 @@ func resize(x, y):
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
 	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
-	
-	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2
-	var offset_y = get_node("Box_Left").get_shape().get_rect().size.y / 2 
-	
-	var topW = get_node("Box_Top").get_shape().get_rect().size.x
-	var topH = get_node("Box_Top").get_shape().get_rect().size.y
-	
-	var sideW = get_node("Box_Left").get_shape().get_rect().size.x
-	var sideH = get_node("Box_Left").get_shape().get_rect().size.y
-	
-	var mePosX = self.position.x
-	var mePosY = self.position.y
-	
-	# Left and Right
-	draw_rect(Rect2(-offset_x, -offset_y, sideW, sideH), Color.WHITE)
-	draw_rect(Rect2(offset_x - 8, -offset_y, sideW, sideH), Color.WHITE)
-	
-	# Top and Bottom
-	draw_rect(Rect2(-offset_x, -offset_y, topW, topH), Color.WHITE)
-	draw_rect(Rect2(-offset_x, offset_y - 8, topW, topH), Color.WHITE)
+
 	queue_redraw()
 
 func _draw():
+	var viewportHeight = get_viewport().size.y
+	var viewportWidth = get_viewport().size.x
+
 	
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2
 	var offset_y = get_node("Box_Left").get_shape().get_rect().size.y / 2 
@@ -70,12 +57,26 @@ func _draw():
 	var mePosY = self.position.y
 	
 	# Left and Right
-	draw_rect(Rect2(-offset_x, -offset_y, sideW, sideH), Color.WHITE)
-	draw_rect(Rect2(offset_x - borderWidth, -offset_y, sideW, sideH), Color.WHITE)
+	draw_rect(Rect2(-offset_x, -offset_y, sideW, sideH), borderColor)
+	draw_rect(Rect2(offset_x - borderWidth, -offset_y, sideW, sideH), borderColor)
 	
 	# Top and Bottom
-	draw_rect(Rect2(-offset_x, -offset_y, topW, topH), Color.WHITE)
-	draw_rect(Rect2(-offset_x, offset_y - borderWidth, topW, topH), Color.WHITE)
+	draw_rect(Rect2(-offset_x, -offset_y, topW, topH), borderColor)
+	draw_rect(Rect2(-offset_x, offset_y - borderWidth, topW, topH), borderColor)
+	
+	# Dark background
+	
+	# Left and Right
+	draw_rect(Rect2(-(viewportWidth / 2), -(viewportHeight / 2) - defaultPosOffset, 
+			(self.position.x - $Box_Top.shape.size.x / 2), viewportHeight), backgroundColor)
+	draw_rect(Rect2($Box_Top.shape.size.x / 2, -(viewportHeight / 2) - defaultPosOffset, 
+			viewportWidth, viewportHeight), backgroundColor)
+			
+	# Top and Bottom
+	draw_rect(Rect2(-(viewportWidth / 2), -(viewportHeight / 2) - defaultPosOffset, 
+			viewportWidth, self.position.y - $Box_Left.shape.size.y / 2), backgroundColor)
+	draw_rect(Rect2(-(viewportWidth / 2), $Box_Left.shape.size.y / 2, 
+			viewportWidth, viewportHeight), backgroundColor)
 	pass
 
 func _ready():
