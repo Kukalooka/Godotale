@@ -41,6 +41,7 @@ position = Vector2(320, 360)
 script = ExtResource("4_nnkry")
 defaultPosOffset = 65
 player = NodePath("../PlayerSoul")
+borderWidth = 4
 
 [node name="Box_Top" type="CollisionShape2D" parent="Box"]
 position = Vector2(0, -60)

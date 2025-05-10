@@ -3,5 +3,9 @@ extends Node2D
 @onready var box : BattleBox = $Box
 
 func _ready():
-	box.resize(400, 300)
+	box.resize(640, 480)
 	pass # Replace with function body.
+
+func _input(ev):
+	if Input.is_key_pressed(KEY_K):
+		box.resize(100, 100)
