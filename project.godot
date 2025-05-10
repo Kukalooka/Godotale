@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="UTFD"
-run/main_scene="res://fightSystem.tscn"
+run/main_scene="res://Scenes/fightSystem.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Visual/icon.svg"
 
 [display]
 
@@ -23,3 +23,4 @@ window/size/viewport_height=480
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.0999859, 0.099986, 0.099986, 1)
