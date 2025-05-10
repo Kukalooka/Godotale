@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="UTFD"
-run/main_scene="res://Scenes/fightSystem.tscn"
+config/name="Godotale"
+run/main_scene="res://fightSystem.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
