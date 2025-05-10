@@ -38,7 +38,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_1ck7a")
 
 [node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player")]
-position = Vector2(320, 360)
+position = Vector2(320, 300)
 script = ExtResource("4_nnkry")
 defaultPosOffset = 65
 player = NodePath("../PlayerSoul")

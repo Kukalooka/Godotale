@@ -9,9 +9,10 @@ class_name BattleBox
 @export var borderColor : Color
 @export var backgroundColor : Color
 
+@onready var viewportHeight = get_viewport().size.y
+@onready var viewportWidth = get_viewport().size.x
+
 func resize(x, y):
-	var viewportHeight = get_viewport().size.y
-	
 	$Box_Top.shape.set_size(Vector2(x, borderWidth))
 	$Box_Bottom.shape.set_size(Vector2(x, borderWidth))
 	$Box_Left.shape.set_size(Vector2(borderWidth, y))
@@ -26,7 +27,14 @@ func resize(x, y):
 			($Box_Top.shape.get_size().x / 2 ) + borderWidth / 2, $Box_Left.position.y)
 	$Box_Right.position = Vector2($Box_Top.position.x + 
 			($Box_Top.shape.get_size().x / 2 ) - borderWidth / 2, $Box_Right.position.y)
-			
+	queue_redraw()
+	
+	
+# This resize ignores UI when positioning
+	
+func resizeIgnoreUI(x, y):
+	resize(x, y)
+	
 	var sizePercent = float(y)/ float(viewportHeight)
 	var esc = pow((1 - sizePercent), 0.5)
 	if esc > 1:
@@ -36,14 +44,9 @@ func resize(x, y):
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
 	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
-
 	queue_redraw()
 
 func _draw():
-	var viewportHeight = get_viewport().size.y
-	var viewportWidth = get_viewport().size.x
-
-	
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2
 	var offset_y = get_node("Box_Left").get_shape().get_rect().size.y / 2 
 	
@@ -73,8 +76,8 @@ func _draw():
 			viewportWidth, viewportHeight), backgroundColor)
 			
 	# Top and Bottom
-	draw_rect(Rect2(-(viewportWidth / 2), -(viewportHeight / 2) - defaultPosOffset, 
-			viewportWidth, self.position.y - $Box_Left.shape.size.y / 2 + 7), backgroundColor)
+	draw_rect(Rect2(-(viewportWidth / 2), -($Box_Left.shape.size.y / 2), 
+			viewportWidth, -viewportHeight), backgroundColor)
 	draw_rect(Rect2(-(viewportWidth / 2), $Box_Left.shape.size.y / 2, 
 			viewportWidth, viewportHeight), backgroundColor)
 	pass
