@@ -24,21 +24,14 @@ func resize(x, y):
 			($Box_Top.shape.get_size().x / 2 ) - 4, $Box_Right.position.y)
 			
 	var sizePercent = float(y)/ float(viewportHeight)
-	
-	print(sizePercent)
-	
 	var esc = pow((1 - sizePercent), 0.5)
-	
-	print(esc)
-	
 	if esc > 1:
 		esc = 1
 	elif esc < 0:
 		esc = 0
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
-
-	print(esc)
+	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
 func _draw():
 	
