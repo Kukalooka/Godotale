@@ -43,8 +43,8 @@ script = ExtResource("4_nnkry")
 defaultPosOffset = 65
 player = NodePath("../PlayerSoul")
 borderWidth = 4
-borderColor = Color(1, 0.876253, 0.855209, 1)
-backgroundColor = Color(0, 0.0329535, 4.51226e-09, 1)
+borderColor = Color(0.789229, 0.978901, 0.96732, 1)
+backgroundColor = Color(0.319846, 0.0833755, 0.171997, 1)
 
 [node name="Box_Top" type="CollisionShape2D" parent="Box"]
 position = Vector2(0, -60)

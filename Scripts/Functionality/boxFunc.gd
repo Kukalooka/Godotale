@@ -74,7 +74,7 @@ func _draw():
 			
 	# Top and Bottom
 	draw_rect(Rect2(-(viewportWidth / 2), -(viewportHeight / 2) - defaultPosOffset, 
-			viewportWidth, self.position.y - $Box_Left.shape.size.y / 2), backgroundColor)
+			viewportWidth, self.position.y - $Box_Left.shape.size.y / 2 + 7), backgroundColor)
 	draw_rect(Rect2(-(viewportWidth / 2), $Box_Left.shape.size.y / 2, 
 			viewportWidth, viewportHeight), backgroundColor)
 	pass
