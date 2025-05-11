@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=12 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://Scripts/Flow/master.gd" id="1_8pywo"]
 [ext_resource type="Script" uid="uid://ddxq6g32lnrng" path="res://Scripts/Functionality/charFunc.gd" id="2_x7v4w"]
 [ext_resource type="Texture2D" uid="uid://b3wagihnnskul" path="res://Assets/Visual/Player/heart.png" id="3_1ck7a"]
 [ext_resource type="Script" uid="uid://p4eckqcinrmp" path="res://Scripts/Functionality/boxFunc.gd" id="4_nnkry"]
+[ext_resource type="Script" uid="uid://cjgij31bcbkho" path="res://Scenes/bgGen.gd" id="5_x7v4w"]
+[ext_resource type="Script" uid="uid://b30qyqcpctho8" path="res://Scenes/bgSidesGen.gd" id="6_1ck7a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4th6"]
 size = Vector2(7.5, 7.5)
@@ -32,6 +34,7 @@ offset_right = 640.0
 offset_bottom = 480.0
 
 [node name="PlayerSoul" type="CharacterBody2D" parent="."]
+z_index = 1
 position = Vector2(320, 360)
 script = ExtResource("2_x7v4w")
 
@@ -45,6 +48,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_1ck7a")
 
 [node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player", "UIObject")]
+z_index = -1
 position = Vector2(320, 300)
 script = ExtResource("4_nnkry")
 defaultPosOffset = 65
@@ -69,3 +73,16 @@ shape = SubResource("RectangleShape2D_r8sf2")
 [node name="Box_Right" type="CollisionShape2D" parent="Box"]
 position = Vector2(68, 0)
 shape = SubResource("RectangleShape2D_xecyf")
+
+[node name="Background" type="Node2D" parent="Box" node_paths=PackedStringArray("sideBg", "Box_Top", "Box_Left")]
+z_index = -5
+script = ExtResource("5_x7v4w")
+sideBg = NodePath("../Background_Sides")
+Box_Top = NodePath("../Box_Top")
+Box_Left = NodePath("../Box_Left")
+
+[node name="Background_Sides" type="Node2D" parent="Box" node_paths=PackedStringArray("Box_Top", "Box_Left")]
+z_index = 1
+script = ExtResource("6_1ck7a")
+Box_Top = NodePath("../Box_Top")
+Box_Left = NodePath("../Box_Left")

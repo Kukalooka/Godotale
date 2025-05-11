@@ -9,9 +9,12 @@ class_name BattleBox
 
 @export var borderColor : Color
 @export var backgroundColor : Color
+@export var boxBgColor : Color
 
 @onready var viewportHeight = get_viewport().size.y
 @onready var viewportWidth = get_viewport().size.x
+
+@onready var bg : BattleBg = $Background
 
 func resize(x, y):
 	$Box_Top.shape.set_size(Vector2(x, borderWidth))
@@ -67,6 +70,9 @@ func _draw():
 	var mePosX = self.position.x
 	var mePosY = self.position.y
 	
+	# Box background
+	bg.bgRedraw(-offset_x, -offset_y, topW, sideH)
+	
 	# Left and Right
 	draw_rect(Rect2(-offset_x, -offset_y, sideW, sideH), borderColor)
 	draw_rect(Rect2(offset_x - borderWidth, -offset_y, sideW, sideH), borderColor)
@@ -74,20 +80,6 @@ func _draw():
 	# Top and Bottom
 	draw_rect(Rect2(-offset_x, -offset_y, topW, topH), borderColor)
 	draw_rect(Rect2(-offset_x, offset_y - borderWidth, topW, topH), borderColor)
-	
-	# Dark background
-	
-	# Left and Right
-	draw_rect(Rect2(-(viewportWidth / 2), -(viewportHeight / 2) - defaultPosOffset, 
-			(self.position.x - $Box_Top.shape.size.x / 2), viewportHeight), backgroundColor)
-	draw_rect(Rect2($Box_Top.shape.size.x / 2, -(viewportHeight / 2) - defaultPosOffset, 
-			viewportWidth, viewportHeight), backgroundColor)
-			
-	# Top and Bottom
-	draw_rect(Rect2(-(viewportWidth / 2), -($Box_Left.shape.size.y / 2), 
-			viewportWidth, -viewportHeight), backgroundColor)
-	draw_rect(Rect2(-(viewportWidth / 2), $Box_Left.shape.size.y / 2, 
-			viewportWidth, viewportHeight), backgroundColor)
 	pass
 
 func _ready():
