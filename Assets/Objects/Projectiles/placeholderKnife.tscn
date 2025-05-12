@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwpr30e26q7wm"]
+
+[ext_resource type="Script" uid="uid://k4xr3tnbpq3a" path="res://Scenes/projectileBasics.gd" id="1_higo1"]
+[ext_resource type="Texture2D" uid="uid://g313i5gn5o87" path="res://Assets/Visual/Hazards/placeholderProjectile.png" id="2_bn5oy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3caef"]
+radius = 6.50084
+height = 19.1126
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_puon5"]
+radius = 3.02198
+height = 12.3656
+
+[node name="Area2D" type="Area2D"]
+z_index = 1
+script = ExtResource("1_higo1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_bn5oy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["Hazards"]]
+position = Vector2(-3.70879, 5.90659)
+rotation = -0.722136
+shape = SubResource("CapsuleShape2D_3caef")
+one_way_collision_margin = 0.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(5.4945, 13.0494)
+rotation = -1.55148
+shape = SubResource("CapsuleShape2D_puon5")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

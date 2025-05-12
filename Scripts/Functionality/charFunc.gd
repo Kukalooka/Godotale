@@ -1,8 +1,29 @@
 extends CharacterBody2D
 
+class_name PlayerHeart
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
+
+@export_file("*.wav") var damageSfx : String
+@export var invDuration : float
+@export var invAmount : int
+
+var invincible = false
+
+func blink(duration, amount):
+	var vis : bool = true
+	invincible = true
+	
+	for i in range(1, amount):
+		await get_tree().create_timer(duration).timeout
+		if vis:
+			$Sprite2D.self_modulate.a = 0.5
+		else:
+			$Sprite2D.self_modulate.a = 1
+		vis = !vis
+	invincible = false	
+
 
 
 func _physics_process(delta):
@@ -19,3 +40,9 @@ func _physics_process(delta):
 		velocity.y = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	
+func projectile_hit() -> void:
+	if !invincible:
+		blink(invDuration, invAmount)
+		$AudioStreamPlayer2D.stream = load(damageSfx)
+		$AudioStreamPlayer2D.play()
