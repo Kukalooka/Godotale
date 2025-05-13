@@ -33,6 +33,25 @@ func resize(x, y):
 			($Box_Top.shape.get_size().x / 2 ) - borderWidth / 2, $Box_Right.position.y)
 	queue_redraw()
 	
+func checkForPlayerInBounds() -> void:
+	var playerCol = player.get_node("CollisionShape2D")
+	
+	if player.position.x < $Box_Top.global_position.x - $Box_Top.shape.size.x / 2:
+		player.position.x = ($Box_Top.global_position.x - $Box_Top.shape.size.x / 2 + 
+				playerCol.shape.size.x / 2 + borderWidth / 2)
+	
+	if player.position.x > $Box_Top.global_position.x + $Box_Top.shape.size.x / 2:
+		player.position.x = ($Box_Top.global_position.x + $Box_Top.shape.size.x / 2 - 
+				playerCol.shape.size.x / 2 - borderWidth / 2)
+	
+	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2:
+		player.position.y = ($Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + 
+				playerCol.shape.size.y / 2 + borderWidth / 2)
+				
+	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2:
+		player.position.y = ($Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - 
+				playerCol.shape.size.y / 2 - borderWidth / 2)
+	
 	
 # This resize ignores UI when positioning
 	
@@ -47,7 +66,10 @@ func resizeIgnoreUI(x, y):
 		esc = 0
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
-	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
+			
+	checkForPlayerInBounds()
+
+	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 	
 func resizeMindUI(x, y):
 	var UIPos = UIObject.position.y
@@ -55,7 +77,9 @@ func resizeMindUI(x, y):
 	resize(x, y)
 	self.position = Vector2(viewportWidth / 2, UIObject.position.y - 
 			($Box_Left.shape.size.y / 2))
-	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
+			
+	checkForPlayerInBounds()
+	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
 func _draw():
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2

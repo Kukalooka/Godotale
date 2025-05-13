@@ -14,6 +14,7 @@ height = 12.3656
 [node name="Area2D" type="Area2D"]
 z_index = 1
 script = ExtResource("1_higo1")
+projectileDmg = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

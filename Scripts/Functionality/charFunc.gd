@@ -2,12 +2,17 @@ extends CharacterBody2D
 
 class_name PlayerHeart
 
-const SPEED = 150.0
+@export var SPEED = 150.0
 const JUMP_VELOCITY = -400.0
+
+@export var maxHp = 20
+@export var curHp = 20
 
 @export_file("*.wav") var damageSfx : String
 @export var invDuration : float
 @export var invAmount : int
+
+@export var ui : BattleUi
 
 var invincible = false
 
@@ -41,8 +46,13 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-func projectile_hit() -> void:
+func projectile_hit(dmg) -> void:
 	if !invincible:
+		curHp -= dmg
+		if curHp < 0:
+			curHp = 0		
+			
+		ui.changeHpBar(curHp)
 		blink(invDuration, invAmount)
 		$AudioStreamPlayer2D.stream = load(damageSfx)
 		$AudioStreamPlayer2D.play()

@@ -1,12 +1,27 @@
-[gd_scene load_steps=13 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=18 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://Scripts/Flow/master.gd" id="1_8pywo"]
+[ext_resource type="Script" uid="uid://c0ajrvvwg1mr0" path="res://Scenes/battleUiFunc.gd" id="2_7wjyn"]
 [ext_resource type="Script" uid="uid://ddxq6g32lnrng" path="res://Scripts/Functionality/charFunc.gd" id="2_x7v4w"]
 [ext_resource type="Texture2D" uid="uid://b3wagihnnskul" path="res://Assets/Visual/Player/heart.png" id="3_1ck7a"]
 [ext_resource type="Script" uid="uid://p4eckqcinrmp" path="res://Scripts/Functionality/boxFunc.gd" id="4_nnkry"]
 [ext_resource type="Script" uid="uid://cvdy4wxnantdg" path="res://Scripts/Functionality/boxBg.gd" id="5_nnkry"]
 [ext_resource type="Script" uid="uid://cjgij31bcbkho" path="res://Scripts/Functionality/bgGen.gd" id="5_x7v4w"]
 [ext_resource type="Script" uid="uid://b30qyqcpctho8" path="res://Scripts/Functionality/bgSidesGen.gd" id="6_1ck7a"]
+
+[sub_resource type="SystemFont" id="SystemFont_nnkry"]
+font_names = PackedStringArray("Caladea")
+font_weight = 575
+
+[sub_resource type="LabelSettings" id="LabelSettings_7wjyn"]
+font = SubResource("SystemFont_nnkry")
+font_size = 13
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3caef"]
+bg_color = Color(0.756691, 0, 0.125919, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_puon5"]
+bg_color = Color(0.975516, 0.855809, 1.15514e-06, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4th6"]
 size = Vector2(7.5, 7.5)
@@ -33,14 +48,38 @@ anchors_preset = 0
 offset_top = 376.0
 offset_right = 640.0
 offset_bottom = 480.0
+script = ExtResource("2_7wjyn")
 
-[node name="PlayerSoul" type="CharacterBody2D" parent="."]
+[node name="HP_Label" type="Label" parent="Control"]
+offset_left = 272.0
+offset_top = 24.0
+offset_right = 290.0
+offset_bottom = 40.0
+text = "HP"
+label_settings = SubResource("LabelSettings_7wjyn")
+
+[node name="HP_Bar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 24.0
+offset_right = 360.0
+offset_bottom = 40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3caef")
+theme_override_styles/fill = SubResource("StyleBoxFlat_puon5")
+max_value = 20.0
+value = 20.0
+rounded = true
+allow_greater = true
+show_percentage = false
+
+[node name="PlayerSoul" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ui")]
 z_index = 100
-position = Vector2(320, 360)
+position = Vector2(320, 357)
 script = ExtResource("2_x7v4w")
 damageSfx = "uid://bwd048dqgp1il"
 invDuration = 0.075
-invAmount = 13
+invAmount = 9
+ui = NodePath("../Control")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSoul"]
 scale = Vector2(2, 2)
