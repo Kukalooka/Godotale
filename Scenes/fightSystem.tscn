@@ -74,7 +74,7 @@ show_percentage = false
 
 [node name="PlayerSoul" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ui")]
 z_index = 100
-position = Vector2(320, 357)
+position = Vector2(320, 300)
 script = ExtResource("2_x7v4w")
 damageSfx = "uid://bwd048dqgp1il"
 invDuration = 0.075
@@ -101,7 +101,8 @@ player = NodePath("../PlayerSoul")
 borderWidth = 4
 UIObject = NodePath("../Control")
 borderColor = Color(0.789229, 0.978901, 0.96732, 1)
-backgroundColor = Color(0.319846, 0.0833755, 0.171997, 1)
+backgroundColor = Color(0.0588235, 0.00392157, 0.137255, 1)
+boxBgColor = Color(0.000337821, 0.00465186, 0.00441387, 1)
 
 [node name="Box_Top" type="CollisionShape2D" parent="Box"]
 position = Vector2(0, -60)

@@ -23,11 +23,16 @@ GameMaster="*res://Scripts/Flow/gameMaster.gd"
 
 window/size/viewport_width=640
 window/size/viewport_height=480
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [global_group]
 
 Hazards=""
+
+[internationalization]
+
+rendering/root_node_layout_direction=1
 
 [rendering]
 
