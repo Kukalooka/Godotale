@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwpr30e26q7wm"]
 
-[ext_resource type="Script" uid="uid://k4xr3tnbpq3a" path="res://Scenes/projectileBasics.gd" id="1_higo1"]
+[ext_resource type="Script" uid="uid://k4xr3tnbpq3a" path="res://Scripts/Functionality/projectileBasics.gd" id="1_higo1"]
 [ext_resource type="Texture2D" uid="uid://g313i5gn5o87" path="res://Assets/Visual/Hazards/placeholderProjectile.png" id="2_bn5oy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3caef"]
@@ -14,6 +14,7 @@ height = 12.3656
 [node name="Area2D" type="Area2D"]
 z_index = 1
 script = ExtResource("1_higo1")
+projectileDmg = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

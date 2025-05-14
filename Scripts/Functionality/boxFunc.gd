@@ -11,8 +11,8 @@ class_name BattleBox
 @export var backgroundColor : Color
 @export var boxBgColor : Color
 
-@onready var viewportHeight = get_viewport().size.y
-@onready var viewportWidth = get_viewport().size.x
+@onready var viewportHeight = 480
+@onready var viewportWidth = 640
 
 @onready var bg : BattleBg = $Background
 
@@ -33,9 +33,28 @@ func resize(x, y):
 			($Box_Top.shape.get_size().x / 2 ) - borderWidth / 2, $Box_Right.position.y)
 	queue_redraw()
 	
+# This function will teleport the player in bounds if there is need to do so
+func checkForPlayerInBounds() -> void:
+	var playerCol = player.get_node("CollisionShape2D")
+	
+	# These two if statements check if the player is on either of the sides
+	if player.position.x < $Box_Top.global_position.x - $Box_Top.shape.size.x / 2:
+		player.position.x = ($Box_Top.global_position.x - $Box_Top.shape.size.x / 2 + 
+				playerCol.shape.size.x / 2 + borderWidth / 2)
+	if player.position.x > $Box_Top.global_position.x + $Box_Top.shape.size.x / 2:
+		player.position.x = ($Box_Top.global_position.x + $Box_Top.shape.size.x / 2 - 
+				playerCol.shape.size.x / 2 - borderWidth / 2)
+	
+	# These if statements check if the player is above or below
+	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2:
+		player.position.y = ($Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + 
+				playerCol.shape.size.y / 2 + borderWidth / 2)
+	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2:
+		player.position.y = ($Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - 
+				playerCol.shape.size.y / 2 - borderWidth / 2)
+	
 	
 # This resize ignores UI when positioning
-	
 func resizeIgnoreUI(x, y):
 	resize(x, y)
 	
@@ -47,15 +66,21 @@ func resizeIgnoreUI(x, y):
 		esc = 0
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
-	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
+			
+	checkForPlayerInBounds()
+
+	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 	
+# This resize will always keep the bottom boundry above the control UI node
 func resizeMindUI(x, y):
 	var UIPos = UIObject.position.y
 	
 	resize(x, y)
-	self.position = Vector2(viewportWidth / 2, UIObject.position.y - 
+	self.position = Vector2(viewportWidth / 2, UIPos - 
 			($Box_Left.shape.size.y / 2))
-	player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
+			
+	checkForPlayerInBounds()
+	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
 func _draw():
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2
@@ -70,7 +95,7 @@ func _draw():
 	var mePosX = self.position.x
 	var mePosY = self.position.y
 	
-	# Box background
+	# This offloads the drawing of the box to the other nodes so they can have different Z indexes
 	bg.bgRedraw(-offset_x, -offset_y, topW, sideH)
 	
 	# Left and Right
@@ -83,7 +108,7 @@ func _draw():
 	pass
 
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func _process(delta):
 	pass

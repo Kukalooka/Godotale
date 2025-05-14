@@ -7,15 +7,14 @@ class_name BattleBg
 @export var Box_Top : CollisionShape2D
 @export var Box_Left : CollisionShape2D
 
-@onready var viewportHeight = get_viewport().size.y
-@onready var viewportWidth = get_viewport().size.x
+@onready var viewportHeight = 480
+@onready var viewportWidth = 640
 
 func bgRedraw(x, y, w, h):
 	boxBg.bgRedraw(x, y, w, h)
 	queue_redraw()
 
 func _draw():
-	var defaultPosOffset = get_parent().defaultPosOffset
 	var backgroundColor = get_parent().backgroundColor
 			
 	# Top and Bottom
