@@ -15,7 +15,6 @@ func bgRedraw(x, y, w, h):
 	queue_redraw()
 
 func _draw():
-	var defaultPosOffset = get_parent().defaultPosOffset
 	var backgroundColor = get_parent().backgroundColor
 			
 	# Top and Bottom

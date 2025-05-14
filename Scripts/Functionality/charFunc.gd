@@ -14,7 +14,24 @@ const JUMP_VELOCITY = -400.0
 
 @export var ui : BattleUi
 
+@export var box : BattleBox
+
+var playerState = 1
+
 var invincible = false
+
+func updatePlayerState(val):
+	playerState = val
+		
+	match playerState:
+		0:
+			ui.changeUiState(false)
+			self.visible = false
+			velocity = Vector2(0, 0)
+		1:
+			ui.changeUiState(true)
+			self.visible = true
+			self.position = Vector2(box.position.x + (box.scale.x / 2), box.position.y + (box.scale.y / 2), )
 
 func blink(duration, amount):
 	var vis : bool = true
@@ -32,17 +49,18 @@ func blink(duration, amount):
 
 
 func _physics_process(delta):
-	var direction_x = Input.get_axis("ui_left", "ui_right")
-	if direction_x:
-		velocity.x = direction_x * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-	var direction_y = Input.get_axis("ui_up", "ui_down")
-	if direction_y:
-		velocity.y = direction_y * SPEED
-	else:
-		velocity.y = move_toward(velocity.x, 0, SPEED)
+	if playerState == 1:
+		var direction_x = Input.get_axis("ui_left", "ui_right")
+		if direction_x:
+			velocity.x = direction_x * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+		var direction_y = Input.get_axis("ui_up", "ui_down")
+		if direction_y:
+			velocity.y = direction_y * SPEED
+		else:
+			velocity.y = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
 	

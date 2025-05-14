@@ -1,7 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=20 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://Scripts/Flow/master.gd" id="1_8pywo"]
-[ext_resource type="Script" uid="uid://c0ajrvvwg1mr0" path="res://Scenes/battleUiFunc.gd" id="2_7wjyn"]
+[ext_resource type="Script" uid="uid://c0ajrvvwg1mr0" path="res://Scripts/Functionality/battleUiFunc.gd" id="2_7wjyn"]
 [ext_resource type="Script" uid="uid://ddxq6g32lnrng" path="res://Scripts/Functionality/charFunc.gd" id="2_x7v4w"]
 [ext_resource type="Texture2D" uid="uid://b3wagihnnskul" path="res://Assets/Visual/Player/heart.png" id="3_1ck7a"]
 [ext_resource type="Script" uid="uid://p4eckqcinrmp" path="res://Scripts/Functionality/boxFunc.gd" id="4_nnkry"]
@@ -25,6 +25,13 @@ bg_color = Color(0.975516, 0.855809, 1.15514e-06, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4th6"]
 size = Vector2(7.5, 7.5)
+
+[sub_resource type="Gradient" id="Gradient_7wjyn"]
+colors = PackedColorArray(0.244489, 3.60981e-07, 0.14307, 1, 0.722059, 0, 0.288363, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3caef"]
+gradient = SubResource("Gradient_7wjyn")
+width = 16
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcij8"]
 size = Vector2(144, 8)
@@ -51,19 +58,20 @@ offset_bottom = 480.0
 script = ExtResource("2_7wjyn")
 
 [node name="HP_Label" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = 272.0
-offset_top = 24.0
-offset_right = 290.0
-offset_bottom = 40.0
+offset_top = 8.0
+offset_right = 298.0
+offset_bottom = 32.0
 text = "HP"
 label_settings = SubResource("LabelSettings_7wjyn")
 
 [node name="HP_Bar" type="ProgressBar" parent="Control"]
 layout_mode = 0
 offset_left = 296.0
-offset_top = 24.0
+offset_top = 12.0
 offset_right = 360.0
-offset_bottom = 40.0
+offset_bottom = 28.0
 theme_override_styles/background = SubResource("StyleBoxFlat_3caef")
 theme_override_styles/fill = SubResource("StyleBoxFlat_puon5")
 max_value = 20.0
@@ -72,7 +80,56 @@ rounded = true
 allow_greater = true
 show_percentage = false
 
-[node name="PlayerSoul" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ui")]
+[node name="ActButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 48.0
+offset_right = 312.0
+offset_bottom = 92.0
+focus_neighbor_left = NodePath("../FightButton")
+focus_neighbor_right = NodePath("../ItemButton")
+focus_mode = 0
+mouse_filter = 2
+text = "ACT"
+
+[node name="ItemButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 48.0
+offset_right = 456.0
+offset_bottom = 92.0
+focus_neighbor_left = NodePath("../ActButton")
+focus_neighbor_right = NodePath("../MercyButton")
+focus_mode = 0
+mouse_filter = 2
+text = "ITEMS"
+
+[node name="MercyButton" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 472.0
+offset_top = 48.0
+offset_right = 600.0
+offset_bottom = 92.0
+focus_neighbor_left = NodePath("../ItemButton")
+focus_neighbor_right = NodePath("../FightButton")
+focus_mode = 0
+mouse_filter = 2
+text = "MERCY"
+
+[node name="FightButton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 40.0
+offset_top = 48.0
+offset_right = 168.0
+offset_bottom = 92.0
+focus_neighbor_left = NodePath("../MercyButton")
+focus_neighbor_right = NodePath("../ActButton")
+focus_mode = 0
+mouse_filter = 2
+text = "FIGHT"
+
+[node name="PlayerSoul" type="CharacterBody2D" parent="." node_paths=PackedStringArray("ui", "box")]
 z_index = 100
 position = Vector2(320, 300)
 script = ExtResource("2_x7v4w")
@@ -80,17 +137,25 @@ damageSfx = "uid://bwd048dqgp1il"
 invDuration = 0.075
 invAmount = 9
 ui = NodePath("../Control")
+box = NodePath("../Box")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerSoul"]
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_u4th6")
 
 [node name="Sprite2D" type="Sprite2D" parent="PlayerSoul"]
+clip_children = 2
 texture_filter = 1
 scale = Vector2(2, 2)
 texture = ExtResource("3_1ck7a")
 
+[node name="Mask" type="Sprite2D" parent="PlayerSoul/Sprite2D"]
+rotation = 1.57079
+scale = Vector2(-0.518048, 8.12173)
+texture = SubResource("GradientTexture1D_3caef")
+
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="PlayerSoul"]
+scale = Vector2(0.972982, 1.68795)
 
 [node name="Box" type="StaticBody2D" parent="." node_paths=PackedStringArray("player", "UIObject")]
 z_index = 1

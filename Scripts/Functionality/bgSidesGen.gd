@@ -12,9 +12,7 @@ func bgRedraw():
 	queue_redraw()
 
 func _draw():
-	var defaultPosOffset = get_parent().defaultPosOffset
 	var backgroundColor = get_parent().backgroundColor
-	var boxBgColor = get_parent().boxBgColor
 	
 	# Left and Right
 	draw_rect(Rect2(-(viewportWidth / 2), -(Box_Left.shape.size.y / 2), 

@@ -76,7 +76,7 @@ func resizeMindUI(x, y):
 	var UIPos = UIObject.position.y
 	
 	resize(x, y)
-	self.position = Vector2(viewportWidth / 2, UIObject.position.y - 
+	self.position = Vector2(viewportWidth / 2, UIPos - 
 			($Box_Left.shape.size.y / 2))
 			
 	checkForPlayerInBounds()

@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var box : BattleBox = $Box
+@onready var player : PlayerHeart = $PlayerSoul
 
 var placeholderProjectile = load("res://Assets/Objects/Projectiles/placeholderKnife.tscn")
 
@@ -10,6 +11,10 @@ func _ready():
 
 func _input(ev):
 	if GameMaster.devMode:
+		if Input.is_key_pressed(KEY_O):
+			player.updatePlayerState(0)
+		if Input.is_key_pressed(KEY_P):
+			player.updatePlayerState(1)
 		if Input.is_key_pressed(KEY_K):
 			box.resizeMindUI(200, 200)
 		if Input.is_key_pressed(KEY_L):
