@@ -16,6 +16,8 @@ class_name BattleBox
 
 @onready var bg : BattleBg = $Background
 
+var resizeToken = 0
+
 func resize(x, y):
 	$Box_Top.shape.set_size(Vector2(x, borderWidth))
 	$Box_Bottom.shape.set_size(Vector2(x, borderWidth))
@@ -34,24 +36,26 @@ func resize(x, y):
 	queue_redraw()
 	
 # This function will teleport the player in bounds if there is need to do so
-func checkForPlayerInBounds() -> void:
+func checkForPlayerInBounds(offset) -> void:
 	var playerCol = player.get_node("CollisionShape2D")
 	
 	# These two if statements check if the player is on either of the sides
-	if player.position.x < $Box_Top.global_position.x - $Box_Top.shape.size.x / 2:
+	if player.position.x < $Box_Top.global_position.x - $Box_Top.shape.size.x / 2 + borderWidth + playerCol.shape.size.x / 2:
 		player.position.x = ($Box_Top.global_position.x - $Box_Top.shape.size.x / 2 + 
-				playerCol.shape.size.x / 2 + borderWidth / 2)
-	if player.position.x > $Box_Top.global_position.x + $Box_Top.shape.size.x / 2:
+				playerCol.shape.size.x / 2 + borderWidth / 2 + offset)
+	if player.position.x > $Box_Top.global_position.x + $Box_Top.shape.size.x / 2 - borderWidth - playerCol.shape.size.x / 2:
 		player.position.x = ($Box_Top.global_position.x + $Box_Top.shape.size.x / 2 - 
-				playerCol.shape.size.x / 2 - borderWidth / 2)
+				playerCol.shape.size.x / 2 - borderWidth / 2 - offset)
 	
 	# These if statements check if the player is above or below
-	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2:
+	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + borderWidth + playerCol.shape.size.y / 2:
+		print("outside")
 		player.position.y = ($Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + 
-				playerCol.shape.size.y / 2 - borderWidth)
-	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2:
+				playerCol.shape.size.y / 2 + borderWidth / 2 + offset)
+	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - borderWidth - playerCol.shape.size.y / 2:
+		print("outside")
 		player.position.y = ($Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - 
-				playerCol.shape.size.y / 2 + borderWidth)
+				playerCol.shape.size.y / 2 - borderWidth / 2 - offset)
 	
 	
 # This resize ignores UI when positioning
@@ -66,8 +70,8 @@ func resizeIgnoreUI(x, y):
 		esc = 0
 	
 	self.position = Vector2(self.position.x, viewportHeight / 2 + defaultPosOffset * esc)		
-			
-	checkForPlayerInBounds()
+			#
+	#checkForPlayerInBounds(0)
 
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 	
@@ -79,10 +83,18 @@ func resizeMindUI(x, y):
 	self.position = Vector2(viewportWidth / 2, UIPos - 
 			($Box_Left.shape.size.y / 2))
 			
-	checkForPlayerInBounds()
+	#checkForPlayerInBounds(0)
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
 func resizeProgMindUi(x, y, rate, wait):
+	resizeToken += 1
+	
+	return await _resizeProgMindUi(x, y, rate, wait, resizeToken)
+
+func _resizeProgMindUi(x, y, rate, wait, token):
+	if token != resizeToken:
+		return false
+	
 	for i in range(wait):
 		await get_tree().process_frame
 	var xRate = rate
@@ -105,7 +117,8 @@ func resizeProgMindUi(x, y, rate, wait):
 				resizeMindUI(x, $Box_Left.shape.size.y + yRate)
 		else:
 			resizeMindUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
-		resizeProgMindUi(x, y, rate, wait)
+		checkForPlayerInBounds(rate)
+		return await _resizeProgMindUi(x, y, rate, wait, token)
 	else:
 		return true
 	
