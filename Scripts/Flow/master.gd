@@ -6,7 +6,7 @@ extends Node2D
 var placeholderProjectile = load("res://Assets/Objects/Projectiles/placeholderKnife.tscn")
 
 func _ready():
-	box.resizeMindUI(350, 175)
+	box.resizeProgMindUi(500, 300, 5, 1)
 	pass # Replace with function body.
 
 func _input(ev):
@@ -16,11 +16,11 @@ func _input(ev):
 		if Input.is_key_pressed(KEY_P):
 			player.updatePlayerState(1)
 		if Input.is_key_pressed(KEY_K):
-			box.resizeMindUI(200, 200)
+			box.resizeProgMindUi(200, 200, 5, 1)
 		if Input.is_key_pressed(KEY_L):
-			box.resizeMindUI(300, 100)
+			box.resizeProgMindUi(300, 100, 5, 1)
 		if Input.is_key_pressed(KEY_M):
-			box.resizeIgnoreUI(300, 100)
+			box.resizeProgMindUi(300, 100, 5, 1)
 		if Input.is_key_pressed(KEY_D):
 			var projectile = placeholderProjectile.instantiate()
 			add_child(projectile)

@@ -48,10 +48,10 @@ func checkForPlayerInBounds() -> void:
 	# These if statements check if the player is above or below
 	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2:
 		player.position.y = ($Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + 
-				playerCol.shape.size.y / 2 + borderWidth / 2)
+				playerCol.shape.size.y / 2 - borderWidth)
 	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2:
 		player.position.y = ($Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - 
-				playerCol.shape.size.y / 2 - borderWidth / 2)
+				playerCol.shape.size.y / 2 + borderWidth)
 	
 	
 # This resize ignores UI when positioning
@@ -81,6 +81,34 @@ func resizeMindUI(x, y):
 			
 	checkForPlayerInBounds()
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
+
+func resizeProgMindUi(x, y, rate, wait):
+	for i in range(wait):
+		await get_tree().process_frame
+	var xRate = rate
+	var yRate = rate
+	
+	if x != $Box_Top.shape.size.x || y != $Box_Left.shape.size.y:
+		if x < $Box_Top.shape.size.x:
+			xRate = -xRate
+		if y < $Box_Left.shape.size.y:
+			yRate = -yRate
+
+		if abs(x - $Box_Top.shape.size.x) <= rate || abs(y - $Box_Left.shape.size.y) <= rate:
+			if abs(x - $Box_Top.shape.size.x) <= rate && abs(y - $Box_Left.shape.size.y) <= rate:
+				resizeMindUI(x, y)
+			elif abs(y - $Box_Left.shape.size.y) <= rate:
+				xRate *= 2
+				resizeMindUI($Box_Top.shape.size.x + xRate, y)
+			else:
+				yRate *= 2
+				resizeMindUI(x, $Box_Left.shape.size.y + yRate)
+		else:
+			resizeMindUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
+		resizeProgMindUi(x, y, rate, wait)
+	else:
+		return true
+	
 
 func _draw():
 	var offset_x = get_node("Box_Top").get_shape().get_rect().size.x / 2
