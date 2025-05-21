@@ -18,7 +18,7 @@ class_name BattleBox
 
 var resizeToken = 0
 
-func resize(x, y):
+func _resize(x, y):
 	$Box_Top.shape.set_size(Vector2(x, borderWidth))
 	$Box_Bottom.shape.set_size(Vector2(x, borderWidth))
 	$Box_Left.shape.set_size(Vector2(borderWidth, y))
@@ -59,8 +59,8 @@ func checkForPlayerInBounds(offset) -> void:
 	
 	
 # This resize ignores UI when positioning
-func resizeIgnoreUI(x, y):
-	resize(x, y)
+func _resizeIgnoreUI(x, y):
+	_resize(x, y)
 	
 	var sizePercent = float(y)/ float(viewportHeight)
 	var esc = pow((1 - sizePercent), 0.5)
@@ -76,22 +76,22 @@ func resizeIgnoreUI(x, y):
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 	
 # This resize will always keep the bottom boundry above the control UI node
-func resizeMindUI(x, y):
+func _resizeMindUI(x, y):
 	var UIPos = UIObject.position.y
 	
-	resize(x, y)
+	_resize(x, y)
 	self.position = Vector2(viewportWidth / 2, UIPos - 
 			($Box_Left.shape.size.y / 2))
 			
 	#checkForPlayerInBounds(0)
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
-func resizeProgMindUi(x, y, rate, wait):
+func resizeBox(x, y, rate=2, wait=1, mindUi=true):
 	resizeToken += 1
 	
-	return await _resizeProgMindUi(x, y, rate, wait, resizeToken)
+	return await _resizeBox(x, y, rate, wait, mindUi, resizeToken)
 
-func _resizeProgMindUi(x, y, rate, wait, token):
+func _resizeBox(x, y, rate, wait, mindUi, token):
 	if token != resizeToken:
 		return false
 	
@@ -108,17 +108,29 @@ func _resizeProgMindUi(x, y, rate, wait, token):
 
 		if abs(x - $Box_Top.shape.size.x) <= rate || abs(y - $Box_Left.shape.size.y) <= rate:
 			if abs(x - $Box_Top.shape.size.x) <= rate && abs(y - $Box_Left.shape.size.y) <= rate:
-				resizeMindUI(x, y)
+				if mindUi:
+					_resizeMindUI(x, y)
+				else:
+					_resizeIgnoreUI(x, y)
 			elif abs(y - $Box_Left.shape.size.y) <= rate:
 				xRate *= 2
-				resizeMindUI($Box_Top.shape.size.x + xRate, y)
+				if mindUi:
+					_resizeMindUI($Box_Top.shape.size.x + xRate, y)
+				else:
+					_resizeIgnoreUI($Box_Top.shape.size.x + xRate, y)
 			else:
 				yRate *= 2
-				resizeMindUI(x, $Box_Left.shape.size.y + yRate)
+				if mindUi:
+					_resizeMindUI(x, $Box_Left.shape.size.y + yRate)
+				else:
+					_resizeIgnoreUI(x, $Box_Left.shape.size.y + yRate)
 		else:
-			resizeMindUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
+			if mindUi:
+				_resizeMindUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
+			else:
+				_resizeIgnoreUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
 		checkForPlayerInBounds(rate)
-		return await _resizeProgMindUi(x, y, rate, wait, token)
+		return await _resizeBox(x, y, rate, wait, mindUi, token)
 	else:
 		return true
 	
