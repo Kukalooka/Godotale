@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=22 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://Scripts/Flow/master.gd" id="1_8pywo"]
 [ext_resource type="Script" uid="uid://c0ajrvvwg1mr0" path="res://Scripts/Functionality/battleUiFunc.gd" id="2_7wjyn"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cvdy4wxnantdg" path="res://Scripts/Functionality/boxBg.gd" id="5_nnkry"]
 [ext_resource type="Script" uid="uid://cjgij31bcbkho" path="res://Scripts/Functionality/bgGen.gd" id="5_x7v4w"]
 [ext_resource type="Script" uid="uid://b30qyqcpctho8" path="res://Scripts/Functionality/bgSidesGen.gd" id="6_1ck7a"]
+[ext_resource type="Script" uid="uid://blglrnjrowdbx" path="res://Scripts/Functionality/TextFunc.gd" id="9_3caef"]
 
 [sub_resource type="SystemFont" id="SystemFont_nnkry"]
 font_names = PackedStringArray("Caladea")
@@ -44,6 +45,9 @@ size = Vector2(144, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xecyf"]
 size = Vector2(8, 128)
+
+[sub_resource type="SystemFont" id="SystemFont_3caef"]
+font_names = PackedStringArray("Comic Sans MS")
 
 [node name="Node2D" type="Node2D"]
 z_index = -1
@@ -206,3 +210,28 @@ z_index = -2
 script = ExtResource("6_1ck7a")
 Box_Top = NodePath("../Box_Top")
 Box_Left = NodePath("../Box_Left")
+
+[node name="Textbox" type="Control" parent="." node_paths=PackedStringArray("battleBox", "player")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 232.0
+offset_right = 624.0
+offset_bottom = 376.0
+script = ExtResource("9_3caef")
+defaultSound = "uid://cx0iicmuhj6yp"
+battleBox = NodePath("../Box")
+player = NodePath("../PlayerSoul")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Textbox"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 592.0
+offset_bottom = 112.0
+theme_override_fonts/normal_font = SubResource("SystemFont_3caef")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "ttest"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Textbox"]

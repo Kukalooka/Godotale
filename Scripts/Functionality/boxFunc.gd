@@ -86,7 +86,7 @@ func _resizeMindUI(x, y):
 	#checkForPlayerInBounds(0)
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
-func resizeBox(x, y, rate=2, wait=1, mindUi=true):
+func resizeBox(x, y, rate=10, wait=0.01, mindUi=true):
 	resizeToken += 1
 	
 	return await _resizeBox(x, y, rate, wait, mindUi, resizeToken)
@@ -95,8 +95,7 @@ func _resizeBox(x, y, rate, wait, mindUi, token):
 	if token != resizeToken:
 		return false
 	
-	for i in range(wait):
-		await get_tree().process_frame
+	await get_tree().create_timer(wait).timeout
 	var xRate = rate
 	var yRate = rate
 	
