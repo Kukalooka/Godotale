@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cvdy4wxnantdg" path="res://Scripts/Functionality/boxBg.gd" id="5_nnkry"]
 [ext_resource type="Script" uid="uid://cjgij31bcbkho" path="res://Scripts/Functionality/bgGen.gd" id="5_x7v4w"]
 [ext_resource type="Script" uid="uid://b30qyqcpctho8" path="res://Scripts/Functionality/bgSidesGen.gd" id="6_1ck7a"]
-[ext_resource type="Script" uid="uid://blglrnjrowdbx" path="res://Scripts/Functionality/TextFunc.gd" id="9_3caef"]
+[ext_resource type="Script" uid="uid://0tbacbehrxxl" path="res://Scripts/Functionality/battleText.gd" id="9_3caef"]
 
 [sub_resource type="SystemFont" id="SystemFont_nnkry"]
 font_names = PackedStringArray("Caladea")
@@ -219,9 +219,9 @@ offset_top = 232.0
 offset_right = 624.0
 offset_bottom = 376.0
 script = ExtResource("9_3caef")
-defaultSound = "uid://cx0iicmuhj6yp"
 battleBox = NodePath("../Box")
 player = NodePath("../PlayerSoul")
+defaultSound = "uid://cj3mvtnk7efkw"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Textbox"]
 layout_mode = 0

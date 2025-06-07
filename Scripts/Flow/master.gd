@@ -2,12 +2,12 @@ extends Node2D
 
 @onready var box : BattleBox = $Box
 @onready var player : PlayerHeart = $PlayerSoul
-@onready var textbox : TextboxSystem = $Textbox
+@onready var textbox : BattleTextbox = $Textbox
 
 var placeholderProjectile = load("res://Assets/Objects/Projectiles/placeholderKnife.tscn")
 
 func _ready():
-	textbox.invokeTextbox("Testing testing...")
+	textbox.invokeBattleText("Testing testing...")
 	pass # Replace with function body.
 
 func _input(ev):
