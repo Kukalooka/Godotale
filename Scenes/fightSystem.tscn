@@ -1,14 +1,17 @@
-[gd_scene load_steps=22 format=3 uid="uid://b2lyr3k3pre3c"]
+[gd_scene load_steps=24 format=3 uid="uid://b2lyr3k3pre3c"]
 
 [ext_resource type="Script" uid="uid://cb6pu5ibm3bnb" path="res://Scripts/Flow/master.gd" id="1_8pywo"]
 [ext_resource type="Script" uid="uid://c0ajrvvwg1mr0" path="res://Scripts/Functionality/battleUiFunc.gd" id="2_7wjyn"]
 [ext_resource type="Script" uid="uid://ddxq6g32lnrng" path="res://Scripts/Functionality/charFunc.gd" id="2_x7v4w"]
 [ext_resource type="Texture2D" uid="uid://b3wagihnnskul" path="res://Assets/Visual/Player/heart.png" id="3_1ck7a"]
+[ext_resource type="Texture2D" uid="uid://c5sa0n2baxm5y" path="res://Assets/Visual/Battle/Fight.png" id="3_pm5od"]
+[ext_resource type="Texture2D" uid="uid://cgq3coyjcoaux" path="res://Assets/Visual/Battle/FightActive.png" id="4_kg0j2"]
 [ext_resource type="Script" uid="uid://p4eckqcinrmp" path="res://Scripts/Functionality/boxFunc.gd" id="4_nnkry"]
 [ext_resource type="Script" uid="uid://cvdy4wxnantdg" path="res://Scripts/Functionality/boxBg.gd" id="5_nnkry"]
 [ext_resource type="Script" uid="uid://cjgij31bcbkho" path="res://Scripts/Functionality/bgGen.gd" id="5_x7v4w"]
 [ext_resource type="Script" uid="uid://b30qyqcpctho8" path="res://Scripts/Functionality/bgSidesGen.gd" id="6_1ck7a"]
 [ext_resource type="Script" uid="uid://0tbacbehrxxl" path="res://Scripts/Functionality/battleText.gd" id="9_3caef"]
+[ext_resource type="FontFile" uid="uid://w6oer6i845yi" path="res://Assets/Visual/Fonts/Default.ttf" id="12_kg0j2"]
 
 [sub_resource type="SystemFont" id="SystemFont_nnkry"]
 font_names = PackedStringArray("Caladea")
@@ -45,9 +48,6 @@ size = Vector2(144, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xecyf"]
 size = Vector2(8, 128)
-
-[sub_resource type="SystemFont" id="SystemFont_3caef"]
-font_names = PackedStringArray("Comic Sans MS")
 
 [node name="Node2D" type="Node2D"]
 z_index = -1
@@ -87,6 +87,7 @@ allow_greater = true
 show_percentage = false
 
 [node name="ActButton" type="Button" parent="Control"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 184.0
 offset_top = 48.0
@@ -98,7 +99,17 @@ focus_mode = 0
 mouse_filter = 2
 text = "ACT"
 
+[node name="Inactive" type="Sprite2D" parent="Control/ActButton"]
+position = Vector2(64, 24)
+texture = ExtResource("3_pm5od")
+
+[node name="Active" type="Sprite2D" parent="Control/ActButton"]
+visible = false
+position = Vector2(64, 24)
+texture = ExtResource("4_kg0j2")
+
 [node name="ItemButton" type="Button" parent="Control"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 328.0
 offset_top = 48.0
@@ -110,7 +121,17 @@ focus_mode = 0
 mouse_filter = 2
 text = "ITEMS"
 
+[node name="Inactive" type="Sprite2D" parent="Control/ItemButton"]
+position = Vector2(64, 24)
+texture = ExtResource("3_pm5od")
+
+[node name="Active" type="Sprite2D" parent="Control/ItemButton"]
+visible = false
+position = Vector2(64, 24)
+texture = ExtResource("4_kg0j2")
+
 [node name="MercyButton" type="Button" parent="Control"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 472.0
 offset_top = 48.0
@@ -122,7 +143,17 @@ focus_mode = 0
 mouse_filter = 2
 text = "MERCY"
 
+[node name="Inactive" type="Sprite2D" parent="Control/MercyButton"]
+position = Vector2(64, 24)
+texture = ExtResource("3_pm5od")
+
+[node name="Active" type="Sprite2D" parent="Control/MercyButton"]
+visible = false
+position = Vector2(64, 24)
+texture = ExtResource("4_kg0j2")
+
 [node name="FightButton" type="Button" parent="Control"]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = -1
 offset_left = 40.0
@@ -134,6 +165,15 @@ focus_neighbor_right = NodePath("../ActButton")
 focus_mode = 0
 mouse_filter = 2
 text = "FIGHT"
+
+[node name="Inactive" type="Sprite2D" parent="Control/FightButton"]
+position = Vector2(64, 24)
+texture = ExtResource("3_pm5od")
+
+[node name="Active" type="Sprite2D" parent="Control/FightButton"]
+visible = false
+position = Vector2(64, 24)
+texture = ExtResource("4_kg0j2")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Control"]
 
@@ -229,9 +269,14 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 592.0
 offset_bottom = 112.0
-theme_override_fonts/normal_font = SubResource("SystemFont_3caef")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_fonts/normal_font = ExtResource("12_kg0j2")
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "ttest"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Textbox"]
+
+[connection signal="focus_entered" from="Control/ActButton" to="Control" method="_on_act_button_focus_entered"]
+[connection signal="focus_entered" from="Control/ItemButton" to="Control" method="_on_item_button_focus_entered"]
+[connection signal="focus_entered" from="Control/MercyButton" to="Control" method="_on_mercy_button_focus_entered"]
+[connection signal="focus_entered" from="Control/FightButton" to="Control" method="_on_fight_button_focus_entered"]

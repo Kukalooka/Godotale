@@ -7,7 +7,7 @@ extends Node2D
 var placeholderProjectile = load("res://Assets/Objects/Projectiles/placeholderKnife.tscn")
 
 func _ready():
-	textbox.invokeBattleText("Testing testing...")
+	textbox.invokeBattleText("Wow this is so [wave amp=50 freq=5][color=yellow]crazy[/color][/wave]. I would like to eat some [color=red]chocolate.[/color]")
 	pass # Replace with function body.
 
 func _input(ev):
@@ -17,13 +17,13 @@ func _input(ev):
 		if Input.is_key_pressed(KEY_P):
 			player.updatePlayerState(1)
 		if Input.is_key_pressed(KEY_K):
-			box.resizeBox(640, 200, 10, 1)
+			box.resizeBox(640, 200, 10, 0.01)
 		if Input.is_key_pressed(KEY_L):
-			box.resizeBox(200, 300, 10, 1)
+			box.resizeBox(200, 300, 10, 0.01)
 		if Input.is_key_pressed(KEY_M):
-			box.resizeBox(600, 400, 10, 1, false)
+			box.resizeBox(600, 400, 10, 0.01, false)
 		if Input.is_key_pressed(KEY_U):
-			box.resizeBox(200, 80, 10, 1)
+			box.resizeBox(200, 80, 10, 0.01)
 		if Input.is_key_pressed(KEY_D):
 			var projectile = placeholderProjectile.instantiate()
 			add_child(projectile)
