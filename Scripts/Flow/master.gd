@@ -30,3 +30,6 @@ func _input(ev):
 			projectile.position.y = 350
 			projectile.scale.x = 2
 			projectile.scale.y = 2
+		if Input.is_key_pressed(KEY_8):
+			textbox.invokeBattleText(DisplayServer.clipboard_get())
+			
