@@ -12,19 +12,19 @@ func _ready():
 
 func _input(ev):
 	if GameMaster.devMode:
-		if Input.is_key_pressed(KEY_O):
+		if Input.is_key_pressed(KEY_1):
 			player.updatePlayerState(0)
-		if Input.is_key_pressed(KEY_P):
+		if Input.is_key_pressed(KEY_2):
 			player.updatePlayerState(1)
-		if Input.is_key_pressed(KEY_K):
+		if Input.is_key_pressed(KEY_3):
 			box.resizeBox(640, 200, 10, 0.01)
-		if Input.is_key_pressed(KEY_L):
+		if Input.is_key_pressed(KEY_4):
 			box.resizeBox(200, 300, 10, 0.01)
-		if Input.is_key_pressed(KEY_M):
+		if Input.is_key_pressed(KEY_5):
 			box.resizeBox(600, 400, 10, 0.01, false)
-		if Input.is_key_pressed(KEY_U):
+		if Input.is_key_pressed(KEY_6):
 			box.resizeBox(200, 80, 10, 0.01)
-		if Input.is_key_pressed(KEY_D):
+		if Input.is_key_pressed(KEY_7):
 			var projectile = placeholderProjectile.instantiate()
 			add_child(projectile)
 			projectile.position.y = 350
