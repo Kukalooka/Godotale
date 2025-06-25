@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 class_name PlayerHeart
 
+@export var MAX_SPEED = 150.0
 @export var SPEED = 150.0
 const JUMP_VELOCITY = -400.0
 
@@ -46,7 +47,11 @@ func blink(duration, amount):
 		vis = !vis
 	invincible = false	
 
-
+func _input(key):
+	if key.is_action_pressed("ui_advance"):
+		SPEED = MAX_SPEED / 2
+	elif key.is_action_released("ui_advance"):
+		SPEED = MAX_SPEED
 
 func _physics_process(delta):
 	if playerState == 1:
