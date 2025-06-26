@@ -36,9 +36,11 @@ func _writeToBox(text : String, interval, sound, group):
 			return false
 		if text[x] != "[" and bracketflag == 0:
 			$RichTextLabel.append_text(text[x])
-			if text[x] != " ":
-				$AudioStreamPlayer2D.play()
-			await get_tree().create_timer(interval).timeout
+
+			if not Input.is_action_pressed("ui_advance"):	
+				if text[x] != " ":
+					$AudioStreamPlayer2D.play()
+				await get_tree().create_timer(interval).timeout
 		else:
 			if bracketflag < 1:
 				if text[x+1] == "/":
