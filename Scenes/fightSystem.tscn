@@ -31,7 +31,7 @@ bg_color = Color(0.975516, 0.855809, 1.15514e-06, 1)
 size = Vector2(7.5, 7.5)
 
 [sub_resource type="Gradient" id="Gradient_7wjyn"]
-colors = PackedColorArray(0.244489, 3.60981e-07, 0.14307, 1, 0.722059, 0, 0.288363, 1)
+colors = PackedColorArray(0.707246, 0, 0.0864668, 1, 0.929751, 0.000551915, 0.000301106, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_3caef"]
 gradient = SubResource("Gradient_7wjyn")
