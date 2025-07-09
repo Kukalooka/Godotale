@@ -17,7 +17,12 @@ const JUMP_VELOCITY = -400.0
 
 @export var box : BattleBox
 
-var playerState = 1
+enum PlayerState {
+	INACTIVE,
+	REDHEART
+}
+
+var playerState = PlayerState.REDHEART
 
 var invincible = false
 
@@ -25,11 +30,11 @@ func updatePlayerState(val):
 	playerState = val
 		
 	match playerState:
-		0:
+		PlayerState.INACTIVE:
 			ui.changeUiState(false)
 			self.visible = false
 			velocity = Vector2(0, 0)
-		1:
+		PlayerState.REDHEART:
 			ui.changeUiState(true)
 			self.visible = true
 			self.position = Vector2(box.position.x + (box.scale.x / 2), box.position.y + (box.scale.y / 2), )

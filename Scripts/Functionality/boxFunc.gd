@@ -49,11 +49,9 @@ func checkForPlayerInBounds(offset) -> void:
 	
 	# These if statements check if the player is above or below
 	if player.position.y < $Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + borderWidth + playerCol.shape.size.y / 2:
-		print("outside")
 		player.position.y = ($Box_Left.global_position.y - $Box_Left.shape.size.y / 2 + 
 				playerCol.shape.size.y / 2 + borderWidth / 2 + offset)
 	if player.position.y > $Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - borderWidth - playerCol.shape.size.y / 2:
-		print("outside")
 		player.position.y = ($Box_Left.global_position.y + $Box_Left.shape.size.y / 2 - 
 				playerCol.shape.size.y / 2 - borderWidth / 2 - offset)
 	
@@ -86,12 +84,12 @@ func _resizeMindUI(x, y):
 	#checkForPlayerInBounds(0)
 	#player.position = Vector2(self.position.x + (self.scale.x / 2), self.position.y + (self.scale.y / 2), )
 
-func resizeBox(x, y, rate=10, wait=0.01, mindUi=true):
+func resizeBox(x, y, rate=10, waitLen=0.01, stayAboveUi=true):
 	resizeToken += 1
 	
-	return await _resizeBox(x, y, rate, wait, mindUi, resizeToken)
+	return await _resizeBox(x, y, rate, waitLen, stayAboveUi, resizeToken)
 
-func _resizeBox(x, y, rate, wait, mindUi, token):
+func _resizeBox(x, y, rate, wait, stayAboveUi, token):
 	if token != resizeToken:
 		return false
 	
@@ -107,29 +105,29 @@ func _resizeBox(x, y, rate, wait, mindUi, token):
 
 		if abs(x - $Box_Top.shape.size.x) <= rate || abs(y - $Box_Left.shape.size.y) <= rate:
 			if abs(x - $Box_Top.shape.size.x) <= rate && abs(y - $Box_Left.shape.size.y) <= rate:
-				if mindUi:
+				if stayAboveUi:
 					_resizeMindUI(x, y)
 				else:
 					_resizeIgnoreUI(x, y)
 			elif abs(y - $Box_Left.shape.size.y) <= rate:
 				xRate *= 2
-				if mindUi:
+				if stayAboveUi:
 					_resizeMindUI($Box_Top.shape.size.x + xRate, y)
 				else:
 					_resizeIgnoreUI($Box_Top.shape.size.x + xRate, y)
 			else:
 				yRate *= 2
-				if mindUi:
+				if stayAboveUi:
 					_resizeMindUI(x, $Box_Left.shape.size.y + yRate)
 				else:
 					_resizeIgnoreUI(x, $Box_Left.shape.size.y + yRate)
 		else:
-			if mindUi:
+			if stayAboveUi:
 				_resizeMindUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
 			else:
 				_resizeIgnoreUI($Box_Top.shape.size.x + xRate, $Box_Left.shape.size.y + yRate)
 		checkForPlayerInBounds(rate)
-		return await _resizeBox(x, y, rate, wait, mindUi, token)
+		return await _resizeBox(x, y, rate, wait, stayAboveUi, token)
 	else:
 		return true
 	

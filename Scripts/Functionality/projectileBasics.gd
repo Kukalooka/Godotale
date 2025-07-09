@@ -2,6 +2,8 @@ extends Area2D
 
 @export var projectileDmg : int
 
+# Currently this is placeholder dummy code to test functionality
+
 func _physics_process(_delta):
 	self.position.x += 5
 

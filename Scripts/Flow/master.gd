@@ -6,6 +6,8 @@ extends Node2D
 
 var placeholderProjectile = load("res://Assets/Objects/Projectiles/placeholderKnife.tscn")
 
+# Currently this is placeholder dummy code to test functionality
+
 func _ready():
 	textbox.invokeBattleText("Wow this is so [wave amp=50 freq=5][color=yellow]crazy[/color][/wave]. I would like to eat some [color=red][shake rate=20.0 level=5 connected=1]chocolate.[/shake][/color]")
 	pass # Replace with function body.

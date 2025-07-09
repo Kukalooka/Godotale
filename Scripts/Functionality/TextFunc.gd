@@ -24,7 +24,7 @@ func _cancelProcess():
 		
 	return true
 
-func _writeToBox(text : String, interval, sound, group):
+func _writeToBox(text : String, interval, sound):
 	instances += 1
 	$AudioStreamPlayer2D.stream = load(sound)
 	var bracketflag = 0
